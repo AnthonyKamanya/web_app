@@ -1,3 +1,4 @@
+from example_routes import apply_example_routes
 import os
 from flask import Flask, request
 
@@ -5,6 +6,10 @@ from flask import Flask, request
 app = Flask(__name__)
 
 # == Your Routes Here ==
+@app.route('/wave', methods =["GET"])
+def get_wave():
+    name = request.args['name']
+    return f"I am waving at {name}"
 
 # == Example Code Below ==
 
@@ -16,9 +21,32 @@ app = Flask(__name__)
 def get_emoji():
     return ":)"
 
+# POST
+# Returns Thanks Leo, you sent this message: "Hello world"
+# Try it:
+#   ; curl http://127.0.0.1:5001/submit
+
+
+@app.route('/submit', methods=['POST'])
+def post_submit():
+    name = request.form['name']
+    message = request.form['message']
+    return f'Thanks {name}, you sent this message: "{message}"'
+
+
+# GET
+# Returns I am waving at Leo
+# Try it:
+#   ; curl http://127.0.0.1:5001/wave
+
+
+@app.route('/wave', methods=['GET'])
+def wave():
+    name = request.form['name']
+    return f'I am waving at {name}'
+
 # This imports some more example routes for you to see how they work
 # You can delete these lines if you don't need them.
-from example_routes import apply_example_routes
 apply_example_routes(app)
 
 # == End Example Code ==
@@ -28,4 +56,3 @@ apply_example_routes(app)
 # if started in test mode.
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get('PORT', 5001)))
-
