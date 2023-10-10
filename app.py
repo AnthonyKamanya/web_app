@@ -11,6 +11,21 @@ def get_wave():
     name = request.args['name']
     return f"I am waving at {name}"
 
+@app.route('/submit', methods =["POST"])
+def post_submit():
+    name = request.form['name']
+    message = request.form['message']
+    return f"Thanks {name}, you sent this message:{message}"
+
+
+@app.route('/count_vowels', methods =["POST"])
+def post_count_vowels():
+    text = request.form['text']
+    num_of_vowels=0
+    for vowels in text:
+        if vowels in "aieou":
+            num_of_vowels +=1
+    return f'There are {num_of_vowels} vowels in "{text}"'
 # == Example Code Below ==
 
 # GET /emoji
@@ -27,11 +42,11 @@ def get_emoji():
 #   ; curl http://127.0.0.1:5001/submit
 
 
-@app.route('/submit', methods=['POST'])
-def post_submit():
-    name = request.form['name']
-    message = request.form['message']
-    return f'Thanks {name}, you sent this message: "{message}"'
+# @app.route('/submit', methods=['POST'])
+# def post_submit():
+#     name = request.form['name']
+#     message = request.form['message']
+#     return f'Thanks {name}, you sent this message: "{message}"'
 
 
 # GET
